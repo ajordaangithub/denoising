@@ -105,3 +105,6 @@ def mp3ToWav(audioFilePath):
     command = 'ffmpeg -i  "' + audioFilePath + '" -ac 1 -ar 16000 "' + newPath + '"'
     print(command)
     subprocess.call(command)
+
+def writeWav(npArray, filename):
+    wavfile.write(filename, 16000, npArray)
