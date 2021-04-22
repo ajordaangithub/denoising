@@ -71,6 +71,7 @@ def showWaveform(audioFilePath):
     t = np.linspace(0, len(x) / sr, len(x), endpoint=False)
     fig = plt.figure(figsize=(20, 5))
     plt.plot(t, x)
+    plt.show()
 
 
 def showSpec(audioFilePath, expo=.5, maxFreq=5000, cutFactorAmp=.5):
