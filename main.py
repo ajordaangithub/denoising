@@ -26,15 +26,18 @@ def main():
     feats, labels = list(), list()
 
     for f in files:
+        # get sample rate and vector
         sr1, x1 = wavfile.read("data/clean/" + f)
         sr2, x2 = wavfile.read("data/perturbed/" + f[:-4] + "_aug.wav")
+
         # preprocessing
         lenx = np.minimum(len(x1), len(x2))
         x1p = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
         x2p = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
-        # add tuple (filename, sample rate, vector) to list
-        labels.append(("data/clean/" + f, sr1, x1p))
-        feats.append(("data/perturbed/" + f[:-4] + "_aug.wav", sr2, x2p))
+
+        # add vectors to list
+        labels.append(x1p)
+        feats.append(x2p)
 
     # # train and test DT model
     # tree_model = DecisionTreeRegressor()
