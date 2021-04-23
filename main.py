@@ -21,24 +21,28 @@ def read_files(directory):
 
 def main():
     # load files
-    feats = read_files("data/perturbed/")
-    labels = read_files("data/clean/")
+    files = read_files("data/clean/")
 
-    sr1, x1 = wavfile.read("data/clean/fn000033_5.wav")
-    sr2, x2 = wavfile.read("data/perturbed/fn000033_5_aug.wav")
+    feats, labels = list(), list()
 
-    # preprocessing
-    lenx = np.minimum(len(x1), len(x2))
-    y = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
-    X = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
+    for f in files:
+        sr1, x1 = wavfile.read("data/clean/" + f)
+        sr2, x2 = wavfile.read("data/perturbed/" + f[:-4] + "_aug.wav")
+        # preprocessing
+        lenx = np.minimum(len(x1), len(x2))
+        x1p = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
+        x2p = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
+        # add tuple (filename, sample rate, vector) to list
+        labels.append(("data/clean/" + f, sr1, x1p))
+        feats.append(("data/perturbed/" + f[:-4] + "_aug.wav", sr2, x2p))
 
-    # train and test DT model
-    tree_model = DecisionTreeRegressor()
-    tree_model.fit(X, y)
-    prediction = tree_model.predict(X)
-
-    # write wav file from prediction
-    functions.writeWav(prediction, "output.wav")
+    # # train and test DT model
+    # tree_model = DecisionTreeRegressor()
+    # tree_model.fit(X, y)
+    # prediction = tree_model.predict(X)
+    #
+    # # write wav file from prediction
+    # functions.writeWav(prediction, "data/prediction/output.wav")
 
 
 main()
