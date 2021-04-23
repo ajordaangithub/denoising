@@ -11,8 +11,19 @@ from sklearn.model_selection import train_test_split
 import random
 import functions
 
+from os import listdir  # to read files
+from os.path import isfile, join  # to read files
+
+
+def read_files(directory):
+    return [f for f in listdir(directory) if isfile(join(directory, f))]
+
+
 def main():
     # load files
+    feats = read_files("data/perturbed/")
+    labels = read_files("data/clean/")
+
     sr1, x1 = wavfile.read("data/clean/fn000033_5.wav")
     sr2, x2 = wavfile.read("data/perturbed/fn000033_5_aug.wav")
 
@@ -28,4 +39,6 @@ def main():
 
     # write wav file from prediction
     functions.writeWav(prediction, "output.wav")
+
+
 main()
