@@ -106,5 +106,5 @@ def mp3ToWav(audioFilePath):
     print(command)
     subprocess.call(command)
 
-def writeWav(npArray, filename):
-    wavfile.write(filename, 16000, npArray)
+def writeWav(Array, filename):
+    wavfile.write(filename, 16000, Array)
