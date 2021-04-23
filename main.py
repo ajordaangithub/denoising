@@ -41,8 +41,8 @@ def main():
 
     # # train and test DT model
     # tree_model = DecisionTreeRegressor()
-    # tree_model.fit(X, y)
-    # prediction = tree_model.predict(X)
+    # tree_model.fit(feats, labels)
+    # prediction = tree_model.predict(feats[0])
     #
     # # write wav file from prediction
     # functions.writeWav(prediction, "data/prediction/output.wav")
