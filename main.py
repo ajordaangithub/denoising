@@ -11,17 +11,15 @@ from sklearn.model_selection import train_test_split
 import random
 import functions
 
-from os import listdir  # to read files
-from os.path import isfile, join  # to read files
 
 
-def read_files(directory):
-    return [f for f in listdir(directory) if isfile(join(directory, f))]
+
+
 
 
 def main():
     # load files
-    files = read_files("data/clean/")
+    files = functions.read_files("data/clean/")
 
     feats, labels = list(), list()
 
@@ -38,6 +36,8 @@ def main():
         # add vectors to list
         labels.append(x1p)
         feats.append(x2p)
+    print(labels)
+    print(feats)
 
     # # train and test DT model
     # tree_model = DecisionTreeRegressor()

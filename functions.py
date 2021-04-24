@@ -5,6 +5,8 @@ from scipy import signal
 import subprocess
 import matplotlib.pyplot as plt
 from IPython.display import Audio
+from os import listdir  # to read files
+from os.path import isfile, join  # to read files
 
 
 def specSimilarity(cleanFilePath, augFilePath):
@@ -108,3 +110,6 @@ def mp3ToWav(audioFilePath):
 
 def writeWav(Array, filename):
     wavfile.write(filename, 16000, Array)
+
+def read_files(directory):
+    return [f for f in listdir(directory) if isfile(join(directory, f))]
