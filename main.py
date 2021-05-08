@@ -11,11 +11,7 @@ from sklearn.model_selection import train_test_split
 import noisereduce as nr
 import random
 import functions
-
-
-
-
-
+import sys
 
 
 def main():
@@ -31,15 +27,16 @@ def main():
 
         # preprocessing
         lenx = np.minimum(len(x1), len(x2))
-        clean = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
-        perturbed = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
-
+        clean = x1[:lenx].astype(np.float32)
+        perturbed = x2[:lenx].astype(np.float32)
+        
         # perform denoising
         result = functions.denoise(perturbed, clean)
 
-    #
-    # # write wav file from prediction
-    # functions.writeWav(prediction, "data/prediction/output.wav")
-
+        # write wav file
+        functions.writeWav(result.astype(np.int16), "data/output/output.wav")
+        functions.writeWav(x2, "data/output/original.wav") # for comparing
+        sys.exit()
+  
 
 main()

@@ -8,12 +8,13 @@ from IPython.display import Audio
 from os import listdir  # to read files
 from os.path import isfile, join  # to read files
 import noisereduce as nr
+import sys
 
 
 def denoise(perturbed, clean):
-    reduced_noise = nr.reduce_noise(audio_clip=clean, noise_clip=perturbed, verbose=True)
+    '''denoises float16 audio array'''
+    reduced_noise = nr.reduce_noise(audio_clip=clean, noise_clip=perturbed, verbose=False)
     return reduced_noise
-
 
 def specSimilarity(cleanFilePath, augFilePath):
     '''
