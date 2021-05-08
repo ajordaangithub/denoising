@@ -12,7 +12,7 @@ import noisereduce as nr
 
 def denoise(perturbed, clean):
     reduced_noise = nr.reduce_noise(audio_clip=clean, noise_clip=perturbed, verbose=True)
-    return denoise
+    return reduced_noise
 
 
 def specSimilarity(cleanFilePath, augFilePath):

@@ -36,7 +36,7 @@ def main():
 
         # perform denoising
         result = functions.denoise(perturbed, clean)
-        print(result)
+
     #
     # # write wav file from prediction
     # functions.writeWav(prediction, "data/prediction/output.wav")
