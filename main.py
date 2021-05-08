@@ -8,6 +8,7 @@ from IPython.display import Audio
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
+import noisereduce as nr
 import random
 import functions
 
@@ -30,19 +31,12 @@ def main():
 
         # preprocessing
         lenx = np.minimum(len(x1), len(x2))
-        x1p = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
-        x2p = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
+        clean = np.array(x1[:lenx], dtype='int16').reshape(-1, 1)
+        perturbed = np.array(x2[:lenx], dtype='int16').reshape(-1, 1)
 
-        # add vectors to list
-        labels.append(x1p)
-        feats.append(x2p)
-    print(labels)
-    print(feats)
-
-    # # train and test DT model
-    # tree_model = DecisionTreeRegressor()
-    # tree_model.fit(feats, labels)
-    # prediction = tree_model.predict(feats[0])
+        # perform denoising
+        result = functions.denoise(perturbed, clean)
+        print(result)
     #
     # # write wav file from prediction
     # functions.writeWav(prediction, "data/prediction/output.wav")
