@@ -11,9 +11,12 @@ import noisereduce as nr
 import sys
 
 
-def denoise(perturbed, clean):
+def denoise(perturbed):
     '''denoises float16 audio array'''
-    reduced_noise = nr.reduce_noise(audio_clip=clean, noise_clip=perturbed, verbose=False)
+    # get noise without speech at beginning and end of clip
+    noise = perturbed[:5000] + perturbed[-5000:]
+
+    reduced_noise = nr.reduce_noise(audio_clip=perturbed, noise_clip=noise, verbose=False)
     return reduced_noise
 
 def specSimilarity(cleanFilePath, augFilePath):
