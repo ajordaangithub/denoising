@@ -11,6 +11,10 @@ import noisereduce as nr
 import sys
 
 
+def average(lst):
+    return sum(lst) / len(lst)
+
+
 def denoise(perturbed):
     '''denoises float16 audio array'''
     # get noise without speech at beginning and end of clip

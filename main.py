@@ -17,6 +17,9 @@ import sys
 def main():
     # load files
     files = functions.read_files("data/clean/")
+    scores = list()
+
+    n = 0
 
     for f in files:
         # get sample rate and vector
@@ -35,6 +38,17 @@ def main():
         # write wav file
         functions.writeWav(result.astype(np.int16), "data/denoised/" + f[:-4] + "_denoised.wav")
         # functions.writeWav(x2, "data/output/original.wav") # for comparing
-  
+
+        # evaluate scores
+        score = functions.denoisedScore("data/clean/" + f, "data/perturbed/" + f[:-4] + "_aug.wav", "data/denoised/" + f[:-4] + "_denoised.wav")
+        scores.append(score)
+
+        # limit for testing
+        n += 1
+        if n == 100:
+            break
+
+    print(functions.average(scores))
+
 
 main()
