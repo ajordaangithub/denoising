@@ -16,12 +16,16 @@ def average(lst):
 
 
 def denoise(perturbed):
-    '''denoises float16 audio array'''
+    '''denoises float32 audio array'''
     # get noise without speech at beginning and end of clip
-    noise = perturbed[:5000] + perturbed[-5000:]
+    minimum, maximum = np.min(perturbed), np.max(perturbed)
+    for i in range(len(perturbed)):
+        if perturbed[i] > 0.95 * maximum or perturbed[i] < 0.95 * minimum:
+            perturbed[i] = 0.95 * perturbed[i]
+            
 
-    reduced_noise = nr.reduce_noise(audio_clip=perturbed, noise_clip=noise, verbose=False)
-    return reduced_noise
+    #reduced_noise = nr.reduce_noise(audio_clip=clean, noise_clip=perturbed, verbose=False)
+    return perturbed 
 
 def specSimilarity(cleanFilePath, augFilePath):
     '''
